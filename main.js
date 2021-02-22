@@ -48,13 +48,15 @@ class Field {
         }
         return board;
     }
-    
+
     welcomeMessage() {
-        console.log(' ')
+        console.log(" ");
         console.log("Find the hat!");
-        console.log('Use the keys h,j,k,l to move around the board.');
-        console.log('Find the hat(*) and win. Fall in a hole (O) or move out of bound and loose.');
-        console.log(' ')
+        console.log("Use the keys h,j,k,l to move around the board.");
+        console.log(
+            "Find the hat(*) and win. Fall in a hole (O) or move out of bound and loose."
+        );
+        console.log(" ");
     }
     print() {
         for (let i = 0; i < this._field.length; i++) {
@@ -62,43 +64,56 @@ class Field {
         }
     }
 
-getDirection() {
-    let direction = "";
-    let whichWay = false;
-    while (!whichWay) {
-      direction = prompt().toLocaleLowerCase();
-      switch (direction) {
-        case "h":
-          whichWay = true;
-          break;
-        case "j":
-          whichWay = true;
-          break;
-        case "k":
-          whichWay = true;
-          break;
-        case "l":
-          whichWay = true;
-          break;
-        default:
-          console.log("Invalid choice: Direction (hjkl)");
-          break;
-      }
+    getDirection() {
+        let direction = "";
+        let whichWay = false;
+        while (!whichWay) {
+            direction = prompt().toLocaleLowerCase();
+            switch (direction) {
+                case "h":
+                    whichWay = true;
+                    break;
+                case "j":
+                    whichWay = true;
+                    break;
+                case "k":
+                    whichWay = true;
+                    break;
+                case "l":
+                    whichWay = true;
+                    break;
+                default:
+                    console.log("Invalid choice: Direction (hjkl)");
+                    break;
+            }
+        }
+        return direction;
     }
-    return direction;
-  }
 
-winOrLose(){
-    // winning and losing conditions
+    findPatch() {
+        let index = [];
+        for (let i = 0; i < this._field.length; i++) {
+            if (this._field[i].indexOf("*") != -1) {
+                index = [i, this._field[i].indexOf("*")];
+                break;
+            }
+        }
+        return index
+    }
+
+    movePatch() {
+
+    }
+
+    updatePosition(direction) {};
+
+    winOrLose() {
+        // winning and losing conditions
+    }
 }
 
 
-
-
-}
-
-
-const firstField = Field.generateField(8,7,30);
+const firstField = Field.generateField(8, 7, 30);
 const newField = new Field(firstField);
 newField.welcomeMessage();
 newField.print();
