@@ -10,6 +10,8 @@ const pathCharacter = '*';
 class Field {
     constructor(field) {
         this._field = field;
+        this.endGame = false;
+        this.patchIndex = [];
     }
 
     static generateField(width, height, percentage) {
@@ -71,15 +73,19 @@ class Field {
             direction = prompt().toLocaleLowerCase();
             switch (direction) {
                 case "h":
+                    this.patchIndex[1] -= 1;    
                     whichWay = true;
                     break;
                 case "j":
+                    this.patchIndex[0] += 1;
                     whichWay = true;
                     break;
                 case "k":
+                    this.patchIndex[0] -= 1;
                     whichWay = true;
                     break;
                 case "l":
+                    this.patchIndex[1] += 1;
                     whichWay = true;
                     break;
                 default:
@@ -91,30 +97,61 @@ class Field {
     }
 
     findPatch() {
-        let index = [];
         for (let i = 0; i < this._field.length; i++) {
             if (this._field[i].indexOf("*") != -1) {
-                index = [i, this._field[i].indexOf("*")];
+                this.patchIndex = [i, this._field[i].indexOf("*")];
                 break;
             }
         }
-        return index
     }
 
     movePatch() {
-
-    }
-
-    updatePosition(direction) {};
+        this._field[this.patchIndex[1]][this.patchIndex[0]];
+    };
 
     winOrLose() {
         // winning and losing conditions
+        if (typeof this._field[this.patchIndex[1]][this.patchIndex[0]] === 'undefined'){
+            console.log('Ouch!')
+            console.log('You fell Out of Bound!')
+            this.endGame = true;
+        } else if (this._field[this.patchIndex[1]][this.patchIndex[0]] === hole) {
+            console.log('OOOOoooooOOOOOOooooooOOOOOoooooOOOOOooooOOOOOooooOOO')
+            console.log('You stamped on a hole and fell in it');
+            this.endGame = true;
+        } else if (this._field[this.patchIndex[1]][this.patchIndex[0]] === hat) {
+            console.log('CONGRATULATIONS!!!!!')
+            console.log('You found you hat! :)')
+            this.endGame = true;
+        } else {
+            this.endGame = false;
+        }
     }
+
+    playGame() {
+        this.welcomeMessage();
+        this.print();
+        this.findPatch();
+        this.getDirection();
+        console.log('right here')
+        console.log(this.patchIndex[0]);
+        console.log(this.patchIndex[1]);
+        console.log(this._field[this.patchIndex[0]][this.patchIndex[1]]);
+        this.print();
+        while (!this.endGame){
+            this.winOrLose();
+            this.movePatch();
+            this.print();
+            this.getDirection();
+        }
+    }
+
 }
 
 
 const firstField = Field.generateField(8, 7, 30);
 const newField = new Field(firstField);
-newField.welcomeMessage();
-newField.print();
-newField.getDirection();
+newField.playGame();
+//newField.welcomeMessage();
+//newField.print();
+//newField.getDirection();
