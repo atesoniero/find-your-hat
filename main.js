@@ -73,18 +73,18 @@ class Field {
             direction = prompt().toLocaleLowerCase();
             switch (direction) {
                 case "h":
-                    this.patchIndex[1] -= 1;    
-                    whichWay = true;
-                    break;
-                case "j":
-                    this.patchIndex[0] += 1;
-                    whichWay = true;
-                    break;
-                case "k":
                     this.patchIndex[0] -= 1;
                     whichWay = true;
                     break;
                 case "l":
+                    this.patchIndex[0] += 1;
+                    whichWay = true;
+                    break;
+                case "k":
+                    this.patchIndex[1] -= 1;
+                    whichWay = true;
+                    break;
+                case "j":
                     this.patchIndex[1] += 1;
                     whichWay = true;
                     break;
@@ -106,12 +106,13 @@ class Field {
     }
 
     movePatch() {
-        this._field[this.patchIndex[1]][this.patchIndex[0]];
+        this._field[this.patchIndex[1]][this.patchIndex[0]] = '*';
     };
 
     winOrLose() {
         // winning and losing conditions
-        if (typeof this._field[this.patchIndex[1]][this.patchIndex[0]] === 'undefined'){
+        if (this.patchIndex[1] < 0 || this.patchIndex[1] > this._field.length ||
+            this.patchIndex[0] < 0 || this.patchIndex[0] > this._field[0].length) {
             console.log('Ouch!')
             console.log('You fell Out of Bound!')
             this.endGame = true;
@@ -133,25 +134,19 @@ class Field {
         this.print();
         this.findPatch();
         this.getDirection();
-        console.log('right here')
-        console.log(this.patchIndex[0]);
-        console.log(this.patchIndex[1]);
-        console.log(this._field[this.patchIndex[0]][this.patchIndex[1]]);
-        this.print();
-        while (!this.endGame){
+        while (!this.endGame) {
             this.winOrLose();
-            this.movePatch();
-            this.print();
-            this.getDirection();
+            if (!this.endGame) {
+                this.movePatch();
+                this.print();
+                this.getDirection();
+            }
         }
     }
 
 }
 
 
-const firstField = Field.generateField(8, 7, 30);
+const firstField = Field.generateField(15, 21, 30);
 const newField = new Field(firstField);
 newField.playGame();
-//newField.welcomeMessage();
-//newField.print();
-//newField.getDirection();
