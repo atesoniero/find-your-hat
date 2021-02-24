@@ -9,7 +9,7 @@ const pathCharacter = '*';
 
 class Field {
     constructor(field) {
-        this._field = field;
+        this.field = field;
         this.endGame = false;
         this.patchIndex = [];
     }
@@ -61,8 +61,8 @@ class Field {
         console.log(" ");
     }
     print() {
-        for (let i = 0; i < this._field.length; i++) {
-            console.log(this._field[i].join(""));
+        for (let i = 0; i < this.field.length; i++) {
+            console.log(this.field[i].join(""));
         }
     }
 
@@ -70,7 +70,7 @@ class Field {
         let direction = "";
         let whichWay = false;
         while (!whichWay) {
-            direction = prompt().toLocaleLowerCase();
+            direction = prompt('Which direction?').toLocaleLowerCase();
             switch (direction) {
                 case "h":
                     this.patchIndex[0] -= 1;
@@ -97,30 +97,30 @@ class Field {
     }
 
     findPatch() {
-        for (let i = 0; i < this._field.length; i++) {
-            if (this._field[i].indexOf("*") != -1) {
-                this.patchIndex = [i, this._field[i].indexOf("*")];
+        for (let i = 0; i < this.field.length; i++) {
+            if (this.field[i].indexOf("*") != -1) {
+                this.patchIndex = [i, this.field[i].indexOf("*")];
                 break;
             }
         }
     }
 
     movePatch() {
-        this._field[this.patchIndex[1]][this.patchIndex[0]] = '*';
+        this.field[this.patchIndex[1]][this.patchIndex[0]] = '*';
     };
 
     winOrLose() {
         // winning and losing conditions
-        if (this.patchIndex[1] < 0 || this.patchIndex[1] > this._field.length ||
-            this.patchIndex[0] < 0 || this.patchIndex[0] > this._field[0].length) {
+        if (this.patchIndex[1] < 0 || this.patchIndex[1] > this.field.length ||
+            this.patchIndex[0] < 0 || this.patchIndex[0] > this.field[0].length) {
             console.log('Ouch!')
             console.log('You fell Out of Bound!')
             this.endGame = true;
-        } else if (this._field[this.patchIndex[1]][this.patchIndex[0]] === hole) {
+        } else if (this.field[this.patchIndex[1]][this.patchIndex[0]] === hole) {
             console.log('OOOOoooooOOOOOOooooooOOOOOoooooOOOOOooooOOOOOooooOOO')
             console.log('You stamped on a hole and fell in it');
             this.endGame = true;
-        } else if (this._field[this.patchIndex[1]][this.patchIndex[0]] === hat) {
+        } else if (this.field[this.patchIndex[1]][this.patchIndex[0]] === hat) {
             console.log('CONGRATULATIONS!!!!!')
             console.log('You found you hat! :)')
             this.endGame = true;
